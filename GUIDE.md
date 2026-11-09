@@ -20,7 +20,7 @@ grep -h "cheats:" ~/Downloads/Switch/*/log/0400486024DEC000.log ~/Downloads/Swit
 - If you see another build, the cheat is **not** for your version: skip to step 3 (the save and the script work anyway).
 - If nothing shows up, NX2Apple keeps its library somewhere else. Open NX2Apple, look at where your games are, and use that folder instead of `~/Downloads/Switch` in the commands.
 
-## 2. Install the cheats (rupees at 1000, age switch)
+## 2. Install the cheats (rupees at 1000, health and magic refill)
 
 **a.** Create the cheats folder for the game:
 ```
@@ -32,11 +32,13 @@ mkdir -p ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats
 cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats/
 ```
 
-**c.** Start the game. In the menu bar at the top, open the **Cheats** menu and turn on the ones you want: **«Rupees 1000 / Rupie 1000»** and/or **«Age switch: L+R+ZL+ZR + Up = adult, Down = child»**. NX2Apple remembers the choice for the next launch.
+**c.** Start the game. In the menu bar at the top, open the **Cheats** menu and turn on the ones you want: **«Rupees 1000 / Rupie 1000»** and/or **«Refill health + magic on Save + Load»**. NX2Apple remembers the choice for the next launch.
 
 **d.** Load a save and pick up a rupee or open the menu: the counter goes to 1000 (or to the most your wallet holds).
 
-**e. Age switch:** hold **L + R + ZL + ZR** and press **D-pad Up** (adult) or **D-pad Down** (child) for a second. Then open the menu → System → **Save**, and **Load** the same slot: you come back with the other age. The game only reads the age when it loads a save, so nothing changes before that. Don't do it inside a dungeon that only exists for one age.
+**e. Health and magic refill:** with the cheat on, open the menu → System → **Save**, then **Load** the same slot: health and magic come back full.
+
+**f. Age switch (child ↔ adult):** this one is not a cheat. Close the game, double-click `tools/Cambia età Zelda.command` in the repository folder, drag your save folder `0400486024DEC000` into the window when it asks, type the slot number and press Enter. Reopen the game and load the slot. The script backs up the slot first. If macOS says it can't open the file, right-click it → **Open**.
 
 **To turn it off:** turn it off in the Cheats menu and **quit and restart the game**. Turning it off while playing does not undo it.
 
@@ -89,7 +91,7 @@ You want a different rupee count? Add it at the end of the first command, for ex
 
 - **The game crashes or the slot doesn't load:** close the game and copy back the backup from step 3b.
 - **The cheat doesn't change the rupees:** check the build (step 1) and that the cheat is on (step 2, *Check that it loaded*).
-- **The age doesn't change:** after the combo you must save and load the slot (step 2e).
+- **The age doesn't change:** close the game completely before running the script (step 2f).
 - **The quests:** neither the save nor the script completes quests or the story. That is on purpose: setting them by hand can leave the game stuck.
 
 ---
@@ -114,7 +116,7 @@ grep -h "cheats:" ~/Downloads/Switch/*/log/0400486024DEC000.log ~/Downloads/Swit
 - Se compare un'altra build, il cheat **non** è per la tua versione: passa al punto 3 (il salvataggio e lo script funzionano lo stesso).
 - Se non compare niente, NX2Apple tiene la libreria da un'altra parte. Apri NX2Apple, guarda dove sono i tuoi giochi e usa quella cartella al posto di `~/Downloads/Switch` nei comandi.
 
-## 2. Installa i cheat (rupie a 1000, cambio età)
+## 2. Installa i cheat (rupie a 1000, ricarica vita e magia)
 
 **a.** Crea la cartella dei cheat del gioco:
 ```
@@ -126,11 +128,13 @@ mkdir -p ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats
 cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats/
 ```
 
-**c.** Avvia il gioco. Nella barra dei menu in alto apri il menu **Cheat** e accendi quelli che vuoi: **«Rupees 1000 / Rupie 1000»** e/o **«Age switch … / Cambio eta'»**. NX2Apple si ricorda la scelta al lancio successivo.
+**c.** Avvia il gioco. Nella barra dei menu in alto apri il menu **Cheat** e accendi quelli che vuoi: **«Rupees 1000 / Rupie 1000»** e/o **«Ricarica vita e magia con Salva + Carica»**. NX2Apple si ricorda la scelta al lancio successivo.
 
 **d.** Carica una partita e raccogli una rupia oppure apri il menu: il contatore va a 1000 (o al massimo del tuo borsello).
 
-**e. Cambio età:** tieni **L + R + ZL + ZR** e premi **↑** (adulto) o **↓** (bambino) per un secondo. Poi apri il menu → Sistema → **Salva** e **Carica** lo stesso slot: ricompari con l'altra età. Il gioco legge l'età solo quando carica una partita, quindi prima non cambia niente. Non farlo dentro un tempio che esiste per una sola età.
+**e. Ricarica vita e magia:** con il cheat acceso apri il menu → Sistema → **Salva** e poi **Carica** lo stesso slot: vita e magia tornano piene.
+
+**f. Cambio età (bambino ↔ adulto):** questo non è un cheat. Chiudi il gioco, fai doppio clic su `tools/Cambia età Zelda.command` nella cartella del repository, trascina nella finestra la cartella dei salvataggi `0400486024DEC000`, scrivi il numero dello slot e premi Invio. Riapri il gioco e carica lo slot. Lo script fa prima un backup dello slot. Se macOS dice che non può aprirlo, clic destro → **Apri**.
 
 **Per spegnerlo:** spegnilo dal menu Cheat e **chiudi e riapri il gioco**. Spegnerlo mentre giochi non lo annulla.
 
@@ -183,5 +187,5 @@ Vuoi un altro numero di rupie? Aggiungilo in fondo al primo comando, per esempio
 
 - **Il gioco va in crash o lo slot non si carica:** chiudi il gioco e ricopia la copia del punto 3b.
 - **Il cheat non cambia le rupie:** controlla la build (punto 1) e che il cheat sia acceso (punto 2, *Per controllare che sia caricato*).
-- **L'età non cambia:** dopo la combinazione devi salvare e ricaricare lo slot (punto 2e).
+- **L'età non cambia:** chiudi del tutto il gioco prima di lanciare lo script (punto 2f).
 - **Le quest:** né il salvataggio né lo script completano le quest o la storia. È voluto: impostarle a mano può bloccare la partita.

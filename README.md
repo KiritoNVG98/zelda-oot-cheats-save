@@ -8,9 +8,10 @@ I made these for my own copy of the game, which I play on my Mac with [NX2Apple]
 
 | File | What it is |
 |---|---|
-| `cheats/E0F3CCFAF50065AE.txt` | Two Atmosphère-format cheats: **rupees at 1000** and an **age switch** (child ↔ adult) |
+| `cheats/E0F3CCFAF50065AE.txt` | Two Atmosphère-format cheats: **rupees at 1000** and **refill health + magic** (on Save + Load) |
 | `save/child/` · `save/adult/` | The same full-inventory save, with Link as a child or as an adult |
 | `tools/zelda100.py` | The script I used: gives the full inventory to **your** save |
+| `tools/cambia_eta.py` · `tools/Cambia età Zelda.command` | Switches Link between **child and adult** in a save (game closed) |
 | [`GUIDE.md`](GUIDE.md) | **Step-by-step install guide for NX2Apple** (English and Italian) |
 
 ## Cheats
@@ -19,7 +20,13 @@ Both cheats only work with build `E0F3CCFAF50065AE`. I tested them on NX2Apple (
 
 **Rupees 1000.** The game keeps its values in a data manager, looked up by name hash (MurmurHash3). I hook the function that reads integer values (`main+0x83714c`). Each time it runs, my code looks up `PlayerStatus.CurrentRupee` in the same hash table and writes 1000 into its cell. The game still caps rupees to your wallet (1000 with the biggest one).
 
-**Age switch.** Hold **L + R + ZL + ZR** and press **D-pad Up** to become an adult, or **D-pad Down** to become a child. The cheat sets the save value `Sequence_IsChildhood` (hooked at `main+0x837148`, separate from the rupee cheat). **The game only reads the age when it loads a save**, so after the combo: menu → System → **Save**, then **Load** the same slot. It is not an instant transformation: the game loads a different Link and a different version of the world for each age. Don't switch age inside a dungeon that only exists for one age.
+**Refill health + magic.** Same hook idea (`main+0x837150`): it copies `PlayerStatus.MaxLife` into `Life` and `MPMax` into `MP`. While you play, Link keeps his own copy of these values and the game rarely calls that function, so the refill shows up when you **Save and Load** the slot (menu → System). It is not infinite health.
+
+**Why there is no age cheat.** I tried two: the game writes Link's current age into the save when you save, over what a cheat sets, and NX2Apple doesn't seem to run cheats that wait for a button combo. The age is changed in the save file instead, with the script below.
+
+## Age switch (child ↔ adult)
+
+Close the game, then double-click `tools/Cambia età Zelda.command` (or run `python3 tools/cambia_eta.py`). Drag your `0400486024DEC000` save folder into the window when it asks, type the slot number, and reopen the game. The script changes `Sequence_IsChildhood` and the equipped sword and shield (adult: Master Sword + Hylian Shield, child: Kokiri Sword + Deku Shield) in both the save folder and its `.work` copy, after a backup of the slot. Don't switch age while Link is inside a dungeon that only exists for one age.
 
 ## Saves — full inventory
 
@@ -57,7 +64,9 @@ Ho fatto questi file per la mia copia del gioco, che uso sul Mac con [NX2Apple](
 
 **Cheat «Rupie 1000».** Aggancio la funzione con cui il gioco legge i numeri (`main+0x83714c`) e scrivo 1000 nella cella di `PlayerStatus.CurrentRupee`. Il gioco tiene comunque il tetto del borsello (1000 con il più grande).
 
-**Cheat «Cambio età».** Tieni **L + R + ZL + ZR** e premi **↑** per diventare adulto o **↓** per diventare bambino. **Il gioco legge l'età solo quando carica una partita**: dopo la combinazione vai nel menu → Sistema → **Salva** e poi **Carica** lo stesso slot. Non è una trasformazione istantanea, e non cambiare età dentro un tempio che esiste per una sola età.
+**Cheat «Ricarica vita e magia».** Riporta vita e magia al massimo quando fai **Salva + Carica** dello slot (menu → Sistema). Mentre giochi Link tiene i suoi valori, quindi non è vita infinita.
+
+**Cambio età (bambino ↔ adulto).** Con un cheat non funziona: quando salvi, il gioco riscrive l'età attuale di Link. Per questo l'età si cambia nel salvataggio: chiudi il gioco, fai doppio clic su `tools/Cambia età Zelda.command`, trascina nella finestra la cartella dei salvataggi `0400486024DEC000`, scrivi il numero dello slot e riapri il gioco. Lo script fa prima un backup dello slot e cambia anche spada e scudo equipaggiati. Non farlo mentre Link è dentro un tempio che esiste per una sola età.
 
 I cheat funzionano solo con la build `E0F3CCFAF50065AE`. Li ho provati su NX2Apple (Mac M4 Max), **non** su console. Per spegnerli li disattivi e **riavvii il gioco**.
 
