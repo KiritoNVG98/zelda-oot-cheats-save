@@ -11,6 +11,7 @@ I made these for my own copy of the game, which I play on my Mac with [NX2Apple]
 | `cheats/E0F3CCFAF50065AE.txt` | Atmosphère-format cheat: rupees always at 1000 |
 | `save/slot_02/progress.sav` + `caption.sav` | A save with the full inventory (see below) |
 | `tools/zelda100.py` | The script I used: gives the full inventory to **your** save |
+| [`GUIDE.md`](GUIDE.md) | **Step-by-step install guide for NX2Apple** (English and Italian) |
 
 ## Cheat — Rupees 1000
 
@@ -54,6 +55,8 @@ The script only changes values that are already in the save, so the file keeps i
 ---
 
 ## Italiano
+
+📖 **Guida passo passo per NX2Apple: [GUIDE.md](GUIDE.md#guida-passo-passo-per-nx2apple-mac)**
 
 Ho fatto questi file per la mia copia del gioco, che uso sul Mac con [NX2Apple](https://github.com/LNPANDY/NX2Apple). Qui **non ci sono file del gioco**: solo il mio cheat, il mio salvataggio e un piccolo script.
 
