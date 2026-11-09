@@ -2,46 +2,45 @@
 
 **Title ID** `0400486024DEC000` · **version** `v131072` · **main build ID** `E0F3CCFAF50065AE`
 
-🇮🇹 [Italiano più in basso](#italiano)
+🇮🇹 [Italiano più in basso](#italiano) · 📖 [Step-by-step guide / Guida passo passo](GUIDE.md)
 
-I made these for my own copy of the game, which I play on my Mac with [NX2Apple](https://github.com/LNPANDY/NX2Apple). This repository holds **no game files**: only my cheat, my save and a small script.
+I made these for my own copy of the game, which I play on my Mac with [NX2Apple](https://github.com/LNPANDY/NX2Apple). This repository holds **no game files**: only my cheats, my saves and a small script.
 
 | File | What it is |
 |---|---|
-| `cheats/E0F3CCFAF50065AE.txt` | Atmosphère-format cheat: rupees always at 1000 |
-| `save/slot_02/progress.sav` + `caption.sav` | A save with the full inventory (see below) |
+| `cheats/E0F3CCFAF50065AE.txt` | Two Atmosphère-format cheats: **rupees at 1000** and an **age switch** (child ↔ adult) |
+| `save/child/` · `save/adult/` | The same full-inventory save, with Link as a child or as an adult |
 | `tools/zelda100.py` | The script I used: gives the full inventory to **your** save |
 | [`GUIDE.md`](GUIDE.md) | **Step-by-step install guide for NX2Apple** (English and Italian) |
 
-## Cheat — Rupees 1000
+## Cheats
 
-The game keeps its values in a data manager, looked up by name hash (MurmurHash3). I hook the function that reads integer values (`main+0x83714c`). Every time it runs, my code looks up `PlayerStatus.CurrentRupee` in the same hash table, the way the game does, and writes 1000 into its cell. The game then carries on as before. The code sits in six empty padding gaps of `main` and is chained by branches.
+Both cheats only work with build `E0F3CCFAF50065AE`. I tested them on NX2Apple (Mac, Apple M4 Max), **not** on a console. To turn one off, switch it off and **restart the game**.
 
-- The game still caps rupees to your wallet: with the biggest wallet the cap is 1000.
-- To turn it off, switch it off and **restart the game** (the patched instruction stays in memory until then).
-- I tested it on NX2Apple (Mac, Apple M4 Max). I have **not** tested it on a console.
+**Rupees 1000.** The game keeps its values in a data manager, looked up by name hash (MurmurHash3). I hook the function that reads integer values (`main+0x83714c`). Each time it runs, my code looks up `PlayerStatus.CurrentRupee` in the same hash table and writes 1000 into its cell. The game still caps rupees to your wallet (1000 with the biggest one).
 
-**Install (NX2Apple):** copy the file to
-`~/Library/Application Support/nxnative/0400486024DEC000/cheats/E0F3CCFAF50065AE.txt`,
-start the game and turn the cheat on from the Cheats menu.
+**Age switch.** Hold **L + R + ZL + ZR** and press **D-pad Up** to become an adult, or **D-pad Down** to become a child. The cheat sets the save value `Sequence_IsChildhood` (hooked at `main+0x837148`, separate from the rupee cheat). **The game only reads the age when it loads a save**, so after the combo: menu → System → **Save**, then **Load** the same slot. It is not an instant transformation: the game loads a different Link and a different version of the world for each age. Don't switch age inside a dungeon that only exists for one age.
 
-**Install (Atmosphère):** `/atmosphere/contents/0400486024DEC000/cheats/E0F3CCFAF50065AE.txt`.
-
-The cheat only works with build ID `E0F3CCFAF50065AE`. Another game version needs new offsets.
-
-## Save — full inventory
+## Saves — full inventory
 
 - **Weapons:** Kokiri Sword, Master Sword, Biggoron's Sword, Giant's Knife; Deku, Hylian and Mirror Shields; Fairy Bow, Fairy Slingshot, Megaton Hammer
-- **Gear:** Goron and Zora Tunics, Iron and Hover Boots, Goron's Bracelet, Silver and Golden Gauntlets, Silver and Golden Scales
-- **Items:** Hookshot, Longshot, Boomerang, Lens of Truth, both ocarinas, Magic Beans, Fishing Rod, Fire, Ice and Light Arrows, Din's Fire, Farore's Wind, Nayru's Love, Stone of Agony, Gerudo's Card
-- **All 13 songs**
-- **Upgrades:** largest wallet (**1000 rupees**), quiver, bomb bag, bullet bag, nut and stick capacity; arrows 50, bombs 40, bombchus 50, nuts 40, sticks 30, seeds 50
-- **20 hearts**, double magic, double defence
+- **Gear:** Goron and Zora Tunics, Iron and Hover Boots, Goron's Bracelet, Silver and Golden Gauntlets (lift grade set), Silver and Golden Scales (dive depth set)
+- **Items:** Hookshot, Longshot, Boomerang, Lens of Truth, both ocarinas (**Ocarina of Time equipped**), Magic Beans, Fishing Rod, Fire, Ice and Light Arrows, Din's Fire, Farore's Wind, Nayru's Love, Stone of Agony, Gerudo's Card
+- **All 13 songs**, and a Scarecrow's Song (X, Y, X, A, X)
+- **Capacities:** largest wallet (**1000/1000 rupees**), quiver (50), bomb bag (40, also bombchus), bullet bag (50), nuts (40), sticks (30), all full
+- **20 hearts**, **full double magic**, **double defence**
 - **Story items:** the 3 Spiritual Stones, the 6 Medallions, every mask, every trade item, 100 Gold Skulltula tokens
 
-**What it does not do:** it does **not** complete quests or the story. In this game a quest is a chain of steps, and its "completed" flags are computed from those steps, so they cannot be set by hand without risking a stuck game. The bottles are empty, and the Gold Skulltulas are still out in the world (only the token count is 100).
+**What it does not do:** it does **not** complete quests or the story. In this game a quest is a chain of steps whose "completed" flags are computed from those steps, so setting them by hand can leave the game stuck. The bottles are empty and the Gold Skulltulas are still out in the world. The save is early in the story: as an adult you may find places and people that only make sense later.
 
-**Use it:** the save goes in place of a slot of yours. **Copy your whole save folder first.** On NX2Apple the slots are in `Switch/save/0400486024DEC000/slot_XX/` (`slot_01` = slot 2 in the game). If there is a `0400486024DEC000.work` folder next to it, copy the file there too.
+### What I learned about the save (for other editors)
+
+The maxima are **not** derived from the items you own. They are stored on their own, so if you only set `IsGet.*` the game shows `1000/200` and bombs drop to 0:
+- current bag per capacity: `CurrentExpansionActor_<Rupee|Arrow|Bomb|DekuNut|DekuStick|DekuSeed>` (String64 actor name)
+- caps: a struct with one Int member per key (hashes `0xe0010a50` Rupee, `0x418db791` Arrow, `0xe753508b` Bomb, `0xae8cc742` DekuSeed, `0x735b00f7` DekuNut, `0x457616b0` DekuStick)
+- magic: `PlayerStatus.MPMax` / `PlayerStatus.MP` = **480** for double magic (the Great Fairy parameter says 48; with 48 the meter is tiny and Din's Fire fails)
+- `PlayerStatus.IsDefenseUP`, `PlayerStatus.LiftGrade`, `PlayerStatus.DiveDepth`, `PlayerStatus.EquipOcarina`
+- Scarecrow's Song: UIntArray `0xcc535536`, 8 notes; A = 11, Y = 13, X = 16, 0 = empty
 
 ### Make your own save 100%
 
@@ -50,23 +49,18 @@ python3 tools/zelda100.py progress.sav          # writes progress.sav.100, the o
 python3 tools/zelda100.py progress.sav 500      # with a custom rupee count
 ```
 
-The script only changes values that are already in the save, so the file keeps its size.
-
 ---
 
 ## Italiano
 
-📖 **Guida passo passo per NX2Apple: [GUIDE.md](GUIDE.md#guida-passo-passo-per-nx2apple-mac)**
+Ho fatto questi file per la mia copia del gioco, che uso sul Mac con [NX2Apple](https://github.com/LNPANDY/NX2Apple). Qui **non ci sono file del gioco**: solo i miei cheat, i miei salvataggi e un piccolo script. La guida passo passo è in [GUIDE.md](GUIDE.md#guida-passo-passo-per-nx2apple-mac).
 
-Ho fatto questi file per la mia copia del gioco, che uso sul Mac con [NX2Apple](https://github.com/LNPANDY/NX2Apple). Qui **non ci sono file del gioco**: solo il mio cheat, il mio salvataggio e un piccolo script.
+**Cheat «Rupie 1000».** Aggancio la funzione con cui il gioco legge i numeri (`main+0x83714c`) e scrivo 1000 nella cella di `PlayerStatus.CurrentRupee`. Il gioco tiene comunque il tetto del borsello (1000 con il più grande).
 
-**Cheat «Rupie 1000».** Il gioco tiene i suoi valori in un gestore dei dati, cercandoli per hash del nome (MurmurHash3). Ho agganciato la funzione che legge i valori interi (`main+0x83714c`). Ogni volta che passa di lì, il mio codice cerca `PlayerStatus.CurrentRupee` nella stessa tabella del gioco e scrive 1000 nella sua cella. Il gioco ha comunque il tetto del borsello: con quello più grande arriva a 1000. Per spegnerlo lo disattivi e **riavvii il gioco**. L'ho provato su NX2Apple (Mac M4 Max), **non** su console. Funziona solo con la build `E0F3CCFAF50065AE`.
+**Cheat «Cambio età».** Tieni **L + R + ZL + ZR** e premi **↑** per diventare adulto o **↓** per diventare bambino. **Il gioco legge l'età solo quando carica una partita**: dopo la combinazione vai nel menu → Sistema → **Salva** e poi **Carica** lo stesso slot. Non è una trasformazione istantanea, e non cambiare età dentro un tempio che esiste per una sola età.
 
-- NX2Apple: `~/Library/Application Support/nxnative/0400486024DEC000/cheats/E0F3CCFAF50065AE.txt`, poi lo accendi dal menu Cheat.
-- Atmosphère: `/atmosphere/contents/0400486024DEC000/cheats/E0F3CCFAF50065AE.txt`.
+I cheat funzionano solo con la build `E0F3CCFAF50065AE`. Li ho provati su NX2Apple (Mac M4 Max), **non** su console. Per spegnerli li disattivi e **riavvii il gioco**.
 
-**Salvataggio.** Ha tutte le armi, l'equipaggiamento, gli oggetti, le 13 canzoni, i potenziamenti al massimo (1000 rupie), 20 cuori, magia e difesa doppie, le pietre, i medaglioni, tutte le maschere e gli oggetti di scambio, e 100 gettoni Skulltula. **Non completa le quest né la storia**: i flag "completata" il gioco li calcola dai passaggi della quest, e impostarli a mano rischia di bloccare la partita. Le bottiglie sono vuote.
-
-**Prima di sostituire uno slot copia tutta la cartella dei salvataggi.** Su NX2Apple gli slot sono in `Switch/save/0400486024DEC000/slot_XX/` (`slot_01` = slot 2 nel gioco). Se accanto c'è la cartella `0400486024DEC000.work`, copia il file anche lì.
+**Salvataggi** (`save/child` bambino, `save/adult` adulto): tutte le armi e l'equipaggiamento, tutti gli oggetti con l'Ocarina del Tempo equipaggiata, le 13 canzoni e una melodia dello spaventapasseri (X, Y, X, A, X), borsello e borse più grandi pieni (**1000/1000 rupie**), 20 cuori, **magia doppia piena**, difesa doppia, pietre, medaglioni, maschere, oggetti di scambio e 100 gettoni Skulltula. **Non completano le quest né la storia**: i flag "completata" il gioco li calcola dai passaggi della quest. Le bottiglie sono vuote.
 
 **Il tuo salvataggio al 100%:** `python3 tools/zelda100.py progress.sav` crea `progress.sav.100` e lascia intatto l'originale.

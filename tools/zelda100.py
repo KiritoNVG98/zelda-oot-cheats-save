@@ -2,8 +2,9 @@
 """
 zelda100.py - gives a The Legend of Zelda: Ocarina of Time (Switch 2, 0400486024DEC000) save
 the full inventory: every weapon, shield, tunic, boot, item, song, upgrade, medallion, stone,
-mask and trade item, 20 hearts, double magic, double defence, 100 Gold Skulltula tokens and
-the rupee cap.
+mask and trade item, 20 hearts, full double magic, double defence, 100 Gold Skulltula tokens,
+the largest wallet/quiver/bags with their real caps, Golden Gauntlets and Scale, and the Ocarina of
+Time equipped.
 
 Usage:
     python3 zelda100.py progress.sav            -> writes progress.sav.100 next to it
@@ -80,6 +81,43 @@ def main():
     put('PlayerStatus.MaxLife', 80)               # 4 per heart: 80 = 20 hearts
     put('PlayerStatus.Life', 80)
     put('PlayerStatus.CurrentRupee', rupees)
+    put('PlayerStatus.MPMax', 480)                # double magic, tested in game (the Great Fairy params say 48: the game scales it)
+    put('PlayerStatus.MP', 480)
+    put('PlayerStatus.IsDefenseUP', 1)            # double defence (white-edged hearts)
+
+    def put_raw(name, raw):
+        nonlocal changed
+        o = pos.get(mmh3(name.encode()))
+        if o is None: missing.append(name); return
+        if struct.unpack_from('<I', d, o + 4)[0] != raw:
+            struct.pack_into('<I', d, o + 4, raw); changed += 1
+    put_raw('PlayerStatus.LiftGrade', 375060617)                          # Golden Gauntlets
+    put_raw('PlayerStatus.DiveDepth', struct.unpack('<I', struct.pack('<f', 9.0))[0])  # Golden Scale
+
+    def put_str(name, value):                     # String64 values: the pair holds an offset to a 64-byte field
+        nonlocal changed
+        o = pos.get(mmh3(name.encode()))
+        if o is None: missing.append(name); return
+        off = struct.unpack_from('<I', d, o + 4)[0]
+        new = value.encode() + b'\0' * (64 - len(value))
+        if bytes(d[off:off + 64]) != new:
+            d[off:off + 64] = new; changed += 1
+    put_str('PlayerStatus.EquipOcarina', 'Item_Ocarina_Time')   # without an equipped ocarina you cannot play or see the songs
+    for key, bag in [('Rupee', 'Item_Wallet_Large'), ('Arrow', 'Item_Quiver_Large'), ('Bomb', 'Item_BombBag_Large'),
+                     ('DekuNut', 'Item_NutBag_Large'), ('DekuStick', 'Item_StickBag_Large'), ('DekuSeed', 'Item_BulletBag_Large')]:
+        put_str('CurrentExpansionActor_' + key, bag)
+
+    # capacity caps: one struct with a member per key (Rupee, Arrow, Bomb, DekuSeed, DekuNut, DekuStick);
+    # the values are the MaxNum of the largest bags. Without them the counter shows 1000/200 and bombs drop to 0.
+    def put_hash(h, value, label):
+        nonlocal changed
+        o = pos.get(h)
+        if o is None: missing.append(label); return
+        if struct.unpack_from('<i', d, o + 4)[0] != value:
+            struct.pack_into('<i', d, o + 4, value); changed += 1
+    for h, v, label in [(0xe0010a50, 1000, 'cap Rupee'), (0x418db791, 50, 'cap Arrow'), (0xe753508b, 40, 'cap Bomb'),
+                        (0xae8cc742, 50, 'cap DekuSeed'), (0x735b00f7, 40, 'cap DekuNut'), (0x457616b0, 30, 'cap DekuStick')]:
+        put_hash(h, v, label)
     dst = src + '.100'
     open(dst, 'wb').write(d)
     print(f'{changed} values changed, written to {dst}')
