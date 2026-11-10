@@ -8,7 +8,7 @@ I made these for my own copy of the game, which I play on my Mac with [NX2Apple]
 
 | File | What it is |
 |---|---|
-| `cheats/E0F3CCFAF50065AE.txt` | Two Atmosphère-format cheats: **rupees at 1000** and **refill health + magic** (on Save + Load) |
+| `cheats/E0F3CCFAF50065AE.txt` | Three Atmosphère-format cheats: **rupees at 1000**, **infinite health**, **infinite magic** |
 | `save/child/` · `save/adult/` | The same full-inventory save, with Link as a child or as an adult |
 | `tools/zelda100.py` | The script I used: gives the full inventory to **your** save |
 | `tools/cambia_eta.py` · `tools/Cambia età Zelda.command` | Switches Link between **child and adult** in a save (game closed) |
@@ -20,9 +20,9 @@ Both cheats only work with build `E0F3CCFAF50065AE`. I tested them on NX2Apple (
 
 **Rupees 1000.** The game keeps its values in a data manager, looked up by name hash (MurmurHash3). I hook the function that reads integer values (`main+0x83714c`). Each time it runs, my code looks up `PlayerStatus.CurrentRupee` in the same hash table and writes 1000 into its cell. The game still caps rupees to your wallet (1000 with the biggest one).
 
-**Refill health + magic.** Same hook idea (`main+0x837150`): it copies `PlayerStatus.MaxLife` into `Life` and `MPMax` into `MP`. While you play, Link keeps his own copy of these values and the game rarely calls that function, so the refill shows up when you **Save and Load** the slot (menu → System). It is not infinite health.
+**Infinite health / Infinite magic.** Plain data cheats, no code patch. They follow the game data manager's pointer (`[[main+0x4C7E180]]`, then its Int value array at `+0xD8`) and copy, every frame, `PlayerStatus.MaxLife` into `Life` and `PlayerStatus.MPMax` into `MP`, so they fit any heart count and single or double magic. A value's cell is its index in the `Int` list of `GameDataList.Product.110.byml` × 0x28 + 0x1C (Life 963, MaxLife 964, MP 965, MPMax 967). I confirmed the MP cell with nxnative's write watch (`DM_PROBE_WATCH`): the Lens of Truth lowers it by 2 a second through the game's own setter, so this cell is the live value.
 
-**Why there is no age cheat.** I tried two: the game writes Link's current age into the save when you save, over what a cheat sets, and NX2Apple doesn't seem to run cheats that wait for a button combo. The age is changed in the save file instead, with the script below.
+**Why there is no age cheat.** The game only applies the age when it loads a save, and my cheats never got the flag into the save. The age is changed in the save file instead, with the script below.
 
 ## Age switch (child ↔ adult)
 
@@ -64,7 +64,7 @@ Ho fatto questi file per la mia copia del gioco, che uso sul Mac con [NX2Apple](
 
 **Cheat «Rupie 1000».** Aggancio la funzione con cui il gioco legge i numeri (`main+0x83714c`) e scrivo 1000 nella cella di `PlayerStatus.CurrentRupee`. Il gioco tiene comunque il tetto del borsello (1000 con il più grande).
 
-**Cheat «Ricarica vita e magia».** Riporta vita e magia al massimo quando fai **Salva + Carica** dello slot (menu → Sistema). Mentre giochi Link tiene i suoi valori, quindi non è vita infinita.
+**Cheat «Vita infinita» e «Magia infinita».** Tengono sempre piene vita e magia, qualunque sia il massimo (cuori, magia singola o doppia). Sono cheat sui dati, senza modifiche al codice: copiano a ogni fotogramma il massimo nel valore attuale.
 
 **Cambio età (bambino ↔ adulto).** Con un cheat non funziona: quando salvi, il gioco riscrive l'età attuale di Link. Per questo l'età si cambia nel salvataggio: chiudi il gioco, fai doppio clic su `tools/Cambia età Zelda.command`, trascina nella finestra la cartella dei salvataggi `0400486024DEC000`, scrivi il numero dello slot e riapri il gioco. Lo script fa prima un backup dello slot e cambia anche spada e scudo equipaggiati. Non farlo mentre Link è dentro un tempio che esiste per una sola età.
 

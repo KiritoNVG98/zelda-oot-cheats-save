@@ -20,7 +20,7 @@ grep -h "cheats:" ~/Downloads/Switch/*/log/0400486024DEC000.log ~/Downloads/Swit
 - If you see another build, the cheat is **not** for your version: skip to step 3 (the save and the script work anyway).
 - If nothing shows up, NX2Apple keeps its library somewhere else. Open NX2Apple, look at where your games are, and use that folder instead of `~/Downloads/Switch` in the commands.
 
-## 2. Install the cheats (rupees at 1000, health and magic refill)
+## 2. Install the cheats (rupees at 1000, infinite health, infinite magic)
 
 **a.** Create the cheats folder for the game:
 ```
@@ -32,17 +32,17 @@ mkdir -p ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats
 cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats/
 ```
 
-**c.** Start the game. In the menu bar at the top, open the **Cheats** menu and turn on the ones you want: **«Rupees 1000 / Rupie 1000»** and/or **«Refill health + magic on Save + Load»**. NX2Apple remembers the choice for the next launch.
+**c.** Start the game. In the menu bar at the top, open the **Cheats** menu and turn on the ones you want: **«Rupees 1000 / Rupie 1000»** and/or **«Infinite health / Vita infinita»**, **«Infinite magic / Magia infinita»**. NX2Apple remembers the choice for the next launch.
 
 **d.** Load a save and pick up a rupee or open the menu: the counter goes to 1000 (or to the most your wallet holds).
 
-**e. Health and magic refill:** with the cheat on, open the menu → System → **Save**, then **Load** the same slot: health and magic come back full.
+**e. Infinite health and magic:** while they are on, the hearts and the magic meter stay full.
 
 **f. Age switch (child ↔ adult):** this one is not a cheat. Close the game, double-click `tools/Cambia età Zelda.command` in the repository folder, drag your save folder `0400486024DEC000` into the window when it asks, type the slot number and press Enter. Reopen the game and load the slot. The script backs up the slot first. If macOS says it can't open the file, right-click it → **Open**.
 
 **To turn it off:** turn it off in the Cheats menu and **quit and restart the game**. Turning it off while playing does not undo it.
 
-**Check that it loaded:** after a launch, run the command from step 1 again. It should say `2 cheats (0 master, … on, 0 broken, 2 runnable)`. If it says `0 on`, the cheats are loaded but off: turn them on from the menu.
+**Check that it loaded:** after a launch, run the command from step 1 again. It should say `3 cheats (0 master, … on, 0 broken, 3 runnable)`. If it says `0 on`, the cheats are loaded but off: turn them on from the menu.
 
 ## 3. Use the full-inventory save
 
@@ -116,7 +116,7 @@ grep -h "cheats:" ~/Downloads/Switch/*/log/0400486024DEC000.log ~/Downloads/Swit
 - Se compare un'altra build, il cheat **non** è per la tua versione: passa al punto 3 (il salvataggio e lo script funzionano lo stesso).
 - Se non compare niente, NX2Apple tiene la libreria da un'altra parte. Apri NX2Apple, guarda dove sono i tuoi giochi e usa quella cartella al posto di `~/Downloads/Switch` nei comandi.
 
-## 2. Installa i cheat (rupie a 1000, ricarica vita e magia)
+## 2. Installa i cheat (rupie a 1000, vita infinita, magia infinita)
 
 **a.** Crea la cartella dei cheat del gioco:
 ```
@@ -128,17 +128,17 @@ mkdir -p ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats
 cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/Application\ Support/nxnative/0400486024DEC000/cheats/
 ```
 
-**c.** Avvia il gioco. Nella barra dei menu in alto apri il menu **Cheat** e accendi quelli che vuoi: **«Rupees 1000 / Rupie 1000»** e/o **«Ricarica vita e magia con Salva + Carica»**. NX2Apple si ricorda la scelta al lancio successivo.
+**c.** Avvia il gioco. Nella barra dei menu in alto apri il menu **Cheat** e accendi quelli che vuoi: **«Rupees 1000 / Rupie 1000»** e/o **«Infinite health / Vita infinita»**, **«Infinite magic / Magia infinita»**. NX2Apple si ricorda la scelta al lancio successivo.
 
 **d.** Carica una partita e raccogli una rupia oppure apri il menu: il contatore va a 1000 (o al massimo del tuo borsello).
 
-**e. Ricarica vita e magia:** con il cheat acceso apri il menu → Sistema → **Salva** e poi **Carica** lo stesso slot: vita e magia tornano piene.
+**e. Vita e magia infinite:** finché sono accesi, cuori e barra della magia restano pieni.
 
 **f. Cambio età (bambino ↔ adulto):** questo non è un cheat. Chiudi il gioco, fai doppio clic su `tools/Cambia età Zelda.command` nella cartella del repository, trascina nella finestra la cartella dei salvataggi `0400486024DEC000`, scrivi il numero dello slot e premi Invio. Riapri il gioco e carica lo slot. Lo script fa prima un backup dello slot. Se macOS dice che non può aprirlo, clic destro → **Apri**.
 
 **Per spegnerlo:** spegnilo dal menu Cheat e **chiudi e riapri il gioco**. Spegnerlo mentre giochi non lo annulla.
 
-**Per controllare che sia caricato:** dopo un avvio rilancia il comando del punto 1. Deve dire `2 cheats (0 master, … on, 0 broken, 2 runnable)`. Se dice `0 on`, i cheat sono caricati ma spenti: accendili dal menu.
+**Per controllare che sia caricato:** dopo un avvio rilancia il comando del punto 1. Deve dire `3 cheats (0 master, … on, 0 broken, 3 runnable)`. Se dice `0 on`, i cheat sono caricati ma spenti: accendili dal menu.
 
 ## 3. Usa il salvataggio con tutto l'inventario
 
