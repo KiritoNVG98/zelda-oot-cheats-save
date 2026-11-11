@@ -36,7 +36,7 @@ Close the game, then double-click `tools/Cambia età Zelda.command` (or run `pyt
 - **All 13 songs**, and a Scarecrow's Song (X, Y, X, A, X)
 - **Capacities:** largest wallet (**1000/1000 rupees**), quiver (50), bomb bag (40, also bombchus), bullet bag (50), nuts (40), sticks (30), all full
 - **20 hearts**, **full double magic**, **double defence**
-- **Story items:** the 3 Spiritual Stones, the 6 Medallions, every mask, every trade item, 100 Gold Skulltula tokens
+- **Story items:** the 3 Spiritual Stones, the 6 Medallions, every mask (the two amiibo masks too), every trade item, 100 Gold Skulltula tokens
 
 **What it does not do:** it does **not** complete quests or the story. In this game a quest is a chain of steps whose "completed" flags are computed from those steps, so setting them by hand can leave the game stuck. The bottles are empty and the Gold Skulltulas are still out in the world. The save is early in the story: as an adult you may find places and people that only make sense later.
 
@@ -56,6 +56,15 @@ python3 tools/zelda100.py progress.sav          # writes progress.sav.100, the o
 python3 tools/zelda100.py progress.sav 500      # with a custom rupee count
 ```
 
+## amiibo masks — what they do (from the game files)
+
+Nintendo has only said that the Young Link and Young Zelda amiibo (out in 2027) unlock "retro" masks. I looked inside the game's own files (version 1.0.2, build `E0F3CCFAF50065AE`), and this is what they do. Things may change with an update.
+
+- **Two masks, already in the game:** `Armor_Child_Mask_Amiibo0` — **Brave Mask** in the English text, *Maschera coraggiosa* in Italian (Young Link) — and `Armor_Child_Mask_Amiibo1` — **Royal Mask**, *Maschera regale* (Young Zelda). They are the 1998 Nintendo 64 faces. My saves and `zelda100.py` include both, because they give every item the game lists.
+- **No gameplay effect.** Their parameters only place the mask on the face (UV, hand position): no bonus, no doors, no hidden items.
+- **People react.** About 150 of the game's event flows have a branch for these masks: Kokiri, Gorons, Zoras, Hylians and Castle Town guards, Malon, Talon, Ingo, Dampé, King Zora, Ruto, Saria, Mido, Skull Kid, Kaepora Gaebora, the Sages, Princess Zelda herself, even the Poes. When you get a mask the game tells you to talk to people while wearing it.
+- **Scanning** (`AmiiboSetting` in the RomFS): the two new figures drop only their mask, with no daily limit. Older Zelda amiibo drop 3 to 5 random items (hearts are the most likely, then magic jars, then bombs, seeds, arrows, sticks, nuts and bombchus), once a day. Any other amiibo is "not supported". amiibo work after the Great Deku Tree, and can be turned off in the options.
+
 ---
 
 ## Italiano
@@ -73,3 +82,5 @@ I cheat funzionano solo con la build `E0F3CCFAF50065AE`. Li ho provati su NX2App
 **Salvataggi** (`save/child` bambino, `save/adult` adulto): tutte le armi e l'equipaggiamento, tutti gli oggetti con l'Ocarina del Tempo equipaggiata, le 13 canzoni e una melodia dello spaventapasseri (X, Y, X, A, X), borsello e borse più grandi pieni (**1000/1000 rupie**), 20 cuori, **magia doppia piena**, difesa doppia, pietre, medaglioni, maschere, oggetti di scambio e 100 gettoni Skulltula. **Non completano le quest né la storia**: i flag "completata" il gioco li calcola dai passaggi della quest. Le bottiglie sono vuote.
 
 **Il tuo salvataggio al 100%:** `python3 tools/zelda100.py progress.sav` crea `progress.sav.100` e lascia intatto l'originale.
+
+**Le maschere degli amiibo (dai file del gioco).** Nintendo ha detto solo che gli amiibo di Link e Zelda bambini (in uscita nel 2027) sbloccano due maschere «retrò». Ho guardato nei file del gioco (versione 1.0.2): le maschere sono già dentro e si chiamano **Maschera coraggiosa** (Link) e **Maschera regale** (Zelda), con i volti del Nintendo 64. I miei salvataggi e `zelda100.py` le includono. **Non hanno effetti sul gioco**: niente bonus né porte. Però **i personaggi reagiscono**: circa 150 dialoghi hanno una variante per queste maschere (Kokiri, Goron, Zora, abitanti e guardie del castello, Malon, Talon, Ingo, Dampé, Re Zora, Ruto, Saria, Mido, Skull Kid, Kaepora, i Saggi, Zelda stessa e perfino i Poe). Gli amiibo nuovi fanno cadere solo la loro maschera, senza limite giornaliero; quelli di Zelda già usciti fanno cadere 3-5 oggetti a caso una volta al giorno (soprattutto cuori, poi ampolle di magia, bombe, semi, frecce, bastoni, noci e bombchu); gli altri amiibo non sono supportati.
