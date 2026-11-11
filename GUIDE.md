@@ -20,7 +20,7 @@ grep -h "cheats:" ~/Downloads/Switch/*/log/0400486024DEC000.log ~/Downloads/Swit
 - If you see another build, the cheat is **not** for your version: skip to step 3 (the save and the script work anyway).
 - If nothing shows up, NX2Apple keeps its library somewhere else. Open NX2Apple, look at where your games are, and use that folder instead of `~/Downloads/Switch` in the commands.
 
-## 2. Install the cheats (rupees at 1000, infinite health, infinite magic)
+## 2. Install the cheats (rupees at 1000, infinite health, infinite magic, jump without cap)
 
 **a.** Create the cheats folder for the game:
 ```
@@ -40,9 +40,11 @@ cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/
 
 **f. Age switch (child ↔ adult):** this one is not a cheat. Close the game, double-click `tools/Cambia età Zelda.command` in the repository folder, drag your save folder `0400486024DEC000` into the window when it asks, type the slot number and press Enter. Reopen the game and load the slot. The script backs up the slot first. If macOS says it can't open the file, right-click it → **Open**.
 
+**g. High jump:** close the game, double-click `tools/Salto alto Zelda.command`, drag the Zelda app (`The Legend of Zelda - Ocarina of Time.app`) into the window, press Enter and type how many times higher (I use `35`). Start the game and turn on **«Jump without 5 m cap / Salto senza limite»** in the Cheats menu: without it the game stops the jump at 5 m. To go back to the normal jump, run the `.command` again and type `off`. Save before you try it: from that high you can land where the game never expected you.
+
 **To turn it off:** turn it off in the Cheats menu and **quit and restart the game**. Turning it off while playing does not undo it.
 
-**Check that it loaded:** after a launch, run the command from step 1 again. It should say `3 cheats (0 master, … on, 0 broken, 3 runnable)`. If it says `0 on`, the cheats are loaded but off: turn them on from the menu.
+**Check that it loaded:** after a launch, run the command from step 1 again. It should say `4 cheats (0 master, … on, 0 broken, 4 runnable)`. If it says `0 on`, the cheats are loaded but off: turn them on from the menu.
 
 ## 3. Use the full-inventory save
 
@@ -116,7 +118,7 @@ grep -h "cheats:" ~/Downloads/Switch/*/log/0400486024DEC000.log ~/Downloads/Swit
 - Se compare un'altra build, il cheat **non** è per la tua versione: passa al punto 3 (il salvataggio e lo script funzionano lo stesso).
 - Se non compare niente, NX2Apple tiene la libreria da un'altra parte. Apri NX2Apple, guarda dove sono i tuoi giochi e usa quella cartella al posto di `~/Downloads/Switch` nei comandi.
 
-## 2. Installa i cheat (rupie a 1000, vita infinita, magia infinita)
+## 2. Installa i cheat (rupie a 1000, vita infinita, magia infinita, salto senza limite)
 
 **a.** Crea la cartella dei cheat del gioco:
 ```
@@ -136,9 +138,11 @@ cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/
 
 **f. Cambio età (bambino ↔ adulto):** questo non è un cheat. Chiudi il gioco, fai doppio clic su `tools/Cambia età Zelda.command` nella cartella del repository, trascina nella finestra la cartella dei salvataggi `0400486024DEC000`, scrivi il numero dello slot e premi Invio. Riapri il gioco e carica lo slot. Lo script fa prima un backup dello slot. Se macOS dice che non può aprirlo, clic destro → **Apri**.
 
+**g. Salto alto:** chiudi il gioco, fai doppio clic su `tools/Salto alto Zelda.command`, trascina nella finestra l'app di Zelda (`The Legend of Zelda - Ocarina of Time.app`), premi Invio e scrivi quante volte più in alto (io uso `35`). Avvia il gioco e accendi **«Jump without 5 m cap / Salto senza limite»** dal menu Cheat: senza, il gioco ferma il salto a 5 metri. Per tornare al salto normale rilancia il `.command` e scrivi `off`. Salva prima di provarlo: da così in alto puoi atterrare dove il gioco non se lo aspetta.
+
 **Per spegnerlo:** spegnilo dal menu Cheat e **chiudi e riapri il gioco**. Spegnerlo mentre giochi non lo annulla.
 
-**Per controllare che sia caricato:** dopo un avvio rilancia il comando del punto 1. Deve dire `3 cheats (0 master, … on, 0 broken, 3 runnable)`. Se dice `0 on`, i cheat sono caricati ma spenti: accendili dal menu.
+**Per controllare che sia caricato:** dopo un avvio rilancia il comando del punto 1. Deve dire `4 cheats (0 master, … on, 0 broken, 4 runnable)`. Se dice `0 on`, i cheat sono caricati ma spenti: accendili dal menu.
 
 ## 3. Usa il salvataggio con tutto l'inventario
 
