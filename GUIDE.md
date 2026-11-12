@@ -46,7 +46,7 @@ cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/
 
 **Check that it loaded:** after a launch, run the command from step 1 again. It should say `4 cheats (0 master, … on, 0 broken, 4 runnable)`. If it says `0 on`, the cheats are loaded but off: turn them on from the menu.
 
-## 3. Use the full-inventory save
+## 3. Use the full-inventory save (every quest done)
 
 **Close the game before you start.** If the game is open, it can overwrite the file.
 
@@ -88,6 +88,8 @@ cp "SAVE/slot_01/progress.sav.100" "SAVE.work/slot_01/progress.sav"
 ```
 
 You want a different rupee count? Add it at the end of the first command, for example `… progress.sav 500`.
+
+**Complete the quests too:** with the game closed, double-click `tools/Completa tutto Zelda.command`, drag the `SAVE` folder into the window, type the slot number (or `T` for all slots) and press Enter. Every main and side quest is set as done, except the final battle with Ganon, and every dungeon gets its map, compass, boss key and 30 small keys; the Door of Time opens. For the keys and the Door of Time only, use `tools/Chiavi porte Zelda.command` the same way. Both make a backup of each slot first, in `Backup salvataggi Zelda` next to the `save` folder.
 
 ## If something goes wrong
 
@@ -144,7 +146,7 @@ cp ~/Downloads/zelda-oot-cheats-save-main/cheats/E0F3CCFAF50065AE.txt ~/Library/
 
 **Per controllare che sia caricato:** dopo un avvio rilancia il comando del punto 1. Deve dire `4 cheats (0 master, … on, 0 broken, 4 runnable)`. Se dice `0 on`, i cheat sono caricati ma spenti: accendili dal menu.
 
-## 3. Usa il salvataggio con tutto l'inventario
+## 3. Usa il salvataggio con tutto l'inventario (missioni completate)
 
 **Chiudi il gioco prima di iniziare.** Se il gioco è aperto, può sovrascrivere il file.
 
@@ -186,6 +188,8 @@ cp "SAVE/slot_01/progress.sav.100" "SAVE.work/slot_01/progress.sav"
 ```
 
 Vuoi un altro numero di rupie? Aggiungilo in fondo al primo comando, per esempio `… progress.sav 500`.
+
+**Completa anche le missioni:** a gioco chiuso fai doppio clic su `tools/Completa tutto Zelda.command`, trascina nella finestra la cartella `SAVE`, scrivi il numero dello slot (o `T` per tutti) e premi Invio. Tutte le missioni principali e secondarie risultano fatte, tranne la battaglia finale con Ganon; ogni dungeon ha mappa, bussola, chiave del boss e 30 chiavi piccole, e la Porta del Tempo si apre. Solo per chiavi e Porta del Tempo usa allo stesso modo `tools/Chiavi porte Zelda.command`. Tutti e due fanno prima un backup di ogni slot in `Backup salvataggi Zelda`, accanto alla cartella `save`.
 
 ## Se qualcosa va storto
 

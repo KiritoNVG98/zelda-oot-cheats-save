@@ -11,6 +11,8 @@ I made these for my own copy of the game, which I play on my Mac with [NX2Apple]
 | `cheats/E0F3CCFAF50065AE.txt` | Four Atmosphère-format cheats: **rupees at 1000**, **infinite health**, **infinite magic**, **jump without the 5 m cap** |
 | `save/child/` · `save/adult/` | The same full-inventory save, with Link as a child or as an adult |
 | `tools/zelda100.py` | The script I used: gives the full inventory to **your** save |
+| `tools/completa_tutto.py` · `tools/Completa tutto Zelda.command` | Completes **every main and side quest** (except the final battle with Ganon) in **your** save |
+| `tools/chiavi_porte.py` · `tools/Chiavi porte Zelda.command` | **30 small keys and the boss key in every dungeon**, and opens the **Door of Time** |
 | `tools/cambia_eta.py` · `tools/Cambia età Zelda.command` | Switches Link between **child and adult** in a save (game closed) |
 | `tools/salto_alto.py` · `tools/Salto alto Zelda.command` | **High jump** mod: builds it from your own game files and turns it on (game closed) |
 | [`GUIDE.md`](GUIDE.md) | **Step-by-step install guide for NX2Apple** (English and Italian) |
@@ -40,7 +42,7 @@ The changed packs go to a `Salto alto Zelda/romfs` folder next to the app, and t
 
 Close the game, then double-click `tools/Cambia età Zelda.command` (or run `python3 tools/cambia_eta.py`). Drag your `0400486024DEC000` save folder into the window when it asks, type the slot number, and reopen the game. The script changes `Sequence_IsChildhood` and the equipped sword and shield (adult: Master Sword + Hylian Shield, child: Kokiri Sword + Deku Shield) in both the save folder and its `.work` copy, after a backup of the slot. Don't switch age while Link is inside a dungeon that only exists for one age.
 
-## Saves — full inventory
+## Saves — full inventory, every quest done
 
 - **Weapons:** Kokiri Sword, Master Sword, Biggoron's Sword, Giant's Knife; Deku, Hylian and Mirror Shields; Fairy Bow, Fairy Slingshot, Megaton Hammer
 - **Gear:** Goron and Zora Tunics, Iron and Hover Boots, Goron's Bracelet, Silver and Golden Gauntlets (lift grade set), Silver and Golden Scales (dive depth set)
@@ -50,7 +52,13 @@ Close the game, then double-click `tools/Cambia età Zelda.command` (or run `pyt
 - **20 hearts**, **full double magic**, **double defence**
 - **Story items:** the 3 Spiritual Stones, the 6 Medallions, every mask (the two amiibo masks too), every trade item, 100 Gold Skulltula tokens
 
-**What it does not do:** it does **not** complete quests or the story. In this game a quest is a chain of steps whose "completed" flags are computed from those steps, so setting them by hand can leave the game stuck. The bottles are empty and the Gold Skulltulas are still out in the world. The save is early in the story: as an adult you may find places and people that only make sense later.
+**Quests:** every main and side quest is **complete**, except the final battle with Ganon, which is left for you to play: the Deku Tree, Hyrule Castle, the three Spiritual Stones, the Door of Time (open, Master Sword pulled), the six Sages and their awakening, Epona, the Great Fairies, the Gold Skulltulas, the Happy Mask Shop, Biggoron's Sword, Fire and Ice Arrows, the Song of Storms, the Scarecrow, Richard the dog, the Poe shop, the running race, the boss rush and the mini-games (fishing, diving, shooting gallery, Dampé's race, digging). Every dungeon has its map, compass, boss key and 30 small keys.
+
+**What it does not do:** chests, Heart Pieces and Gold Skulltulas out in the world are still there (you already own what they give). Some characters may still say an early-game line: the quests are complete, but not every single talk flag. The bottles are empty.
+
+### Quests in the save (for other editors)
+
+Each quest is an `Enum` named `Step_<quest>` (MurmurHash3 of the name, like every key) whose values are the hashes of its step names; the last one is always `Complete` (`0x4c0a63f4`). The game reads them through `BoolExp` entries such as `DoorOfTime_IsAfter_Step03_Exp` (operator 12 = "after", 1 = "equal"). The Door of Time follows `Step_DoorOfTime` (`0x378913ca`), not `Market_Child_TimeTempleDoor_Opened`. Dungeon keys are `DungeonInfo.<dungeon>.SmallKeyNum` / `IsGetBossKey` / `IsGetMap` / `IsGetCompass`, with these dungeon names: `InsideTheDekuTree`, `DodongoCavern`, `InsideJabuJabuBelly`, `ForestTemple`, `FireTemple`, `WaterTemple`, `ShadowTemple`, `SpiritTemple`, `BottomOfTheWell`, `IceCavern`, `GerudoTrainingGround`, `GerudoFortress`, `InsideGanonCastle`, `FinalBattleField`. Opened doors and chests are 64-bit keys in a list at the end of the file (the last section, type 32): the keys of the true ones, then a zero word.
 
 ### What I learned about the save (for other editors)
 
@@ -64,9 +72,11 @@ The maxima are **not** derived from the items you own. They are stored on their 
 ### Make your own save 100%
 
 ```
-python3 tools/zelda100.py progress.sav          # writes progress.sav.100, the original is left alone
+python3 tools/zelda100.py progress.sav          # full inventory: writes progress.sav.100, the original is left alone
 python3 tools/zelda100.py progress.sav 500      # with a custom rupee count
 ```
+
+Then, with the game closed, double-click `tools/Completa tutto Zelda.command` for the quests, maps and keys (or `tools/Chiavi porte Zelda.command` for the keys and the Door of Time only). Drag your `0400486024DEC000` save folder into the window, type the slot number (or `T` for all) and reopen the game. Both scripts back up each slot first, in a `Backup salvataggi Zelda` folder next to your saves.
 
 ## amiibo masks — what they do (from the game files)
 
@@ -93,8 +103,10 @@ Ho fatto questi file per la mia copia del gioco, che uso sul Mac con [NX2Apple](
 
 I cheat funzionano solo con la build `E0F3CCFAF50065AE`. Li ho provati su NX2Apple (Mac M4 Max), **non** su console. Per spegnerli li disattivi e **riavvii il gioco**.
 
-**Salvataggi** (`save/child` bambino, `save/adult` adulto): tutte le armi e l'equipaggiamento, tutti gli oggetti con l'Ocarina del Tempo equipaggiata, le 13 canzoni e una melodia dello spaventapasseri (X, Y, X, A, X), borsello e borse più grandi pieni (**1000/1000 rupie**), 20 cuori, **magia doppia piena**, difesa doppia, pietre, medaglioni, maschere, oggetti di scambio e 100 gettoni Skulltula. **Non completano le quest né la storia**: i flag "completata" il gioco li calcola dai passaggi della quest. Le bottiglie sono vuote.
+**Salvataggi** (`save/child` bambino, `save/adult` adulto): tutte le armi e l'equipaggiamento, tutti gli oggetti con l'Ocarina del Tempo equipaggiata, le 13 canzoni e una melodia dello spaventapasseri (X, Y, X, A, X), borsello e borse più grandi pieni (**1000/1000 rupie**), 20 cuori, **magia doppia piena**, difesa doppia, pietre, medaglioni, maschere, oggetti di scambio e 100 gettoni Skulltula. Le bottiglie sono vuote.
 
-**Il tuo salvataggio al 100%:** `python3 tools/zelda100.py progress.sav` crea `progress.sav.100` e lascia intatto l'originale.
+**Missioni:** nei salvataggi sono **completate tutte le missioni principali e secondarie**, tranne la battaglia finale con Ganon, che resta da giocare: Albero Deku, Castello di Hyrule, le tre pietre, Porta del Tempo (aperta, Spada Suprema estratta), i sei Saggi e il loro risveglio, Epona, le Grandi Fate, le Skulltula d'oro, il venditore di maschere, la Spada di Biggoron, le frecce di fuoco e di ghiaccio, la Canzone della Tempesta, lo spaventapasseri, il cane Richard, il negozio dei Poe, la corsa, la sfida dei boss e i minigiochi. Ogni dungeon ha mappa, bussola, chiave del boss e 30 chiavi piccole. Forzieri, frammenti di cuore e Skulltula sparsi per il mondo restano dove sono, e qualche personaggio può ancora dire una battuta di inizio gioco.
+
+**Il tuo salvataggio al 100%:** `python3 tools/zelda100.py progress.sav` crea `progress.sav.100` e lascia intatto l'originale. Poi, a gioco chiuso, doppio clic su `tools/Completa tutto Zelda.command` (missioni, mappe e chiavi) oppure su `tools/Chiavi porte Zelda.command` (solo chiavi e Porta del Tempo): trascina la cartella dei salvataggi `0400486024DEC000`, scrivi il numero dello slot (o `T` per tutti) e riapri il gioco. Prima di toccare uno slot gli script ne fanno un backup.
 
 **Le maschere degli amiibo (dai file del gioco).** Nintendo ha detto solo che gli amiibo di Link e Zelda bambini (in uscita nel 2027) sbloccano due maschere «retrò». Ho guardato nei file del gioco (versione 1.0.2): le maschere sono già dentro e si chiamano **Maschera coraggiosa** (Link) e **Maschera regale** (Zelda), con i volti del Nintendo 64. I miei salvataggi e `zelda100.py` le includono. **Non hanno effetti sul gioco**: niente bonus né porte. Però **i personaggi reagiscono**: circa 150 dialoghi hanno una variante per queste maschere (Kokiri, Goron, Zora, abitanti e guardie del castello, Malon, Talon, Ingo, Dampé, Re Zora, Ruto, Saria, Mido, Skull Kid, Kaepora, i Saggi, Zelda stessa e perfino i Poe). Gli amiibo nuovi fanno cadere solo la loro maschera, senza limite giornaliero; quelli di Zelda già usciti fanno cadere 3-5 oggetti a caso una volta al giorno (soprattutto cuori, poi ampolle di magia, bombe, semi, frecce, bastoni, noci e bombchu); gli altri amiibo non sono supportati.
